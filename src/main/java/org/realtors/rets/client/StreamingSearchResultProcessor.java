@@ -1,22 +1,22 @@
 package org.realtors.rets.client;
 
-import java.io.InputStream;
-import java.io.Reader;
-import java.util.LinkedList;
-
 import org.apache.commons.lang.exception.NestableRuntimeException;
 import org.apache.commons.logging.LogFactory;
 import org.xml.sax.InputSource;
 
+import java.io.InputStream;
+import java.io.Reader;
+import java.util.LinkedList;
+
 /**
  * SearchResultProcessor that returns a streaming SearchResult implementation.
- * 
+ *
  * @author jrayburn
  */
 public class StreamingSearchResultProcessor implements SearchResultProcessor {
-	private final int mBufferSize;
-	private final int mTimeout;
-	private InvalidReplyCodeHandler mInvalidReplyCodeHandler;
+    private final int mBufferSize;
+    private final int mTimeout;
+    private InvalidReplyCodeHandler mInvalidReplyCodeHandler;
 	private CompactRowPolicy mCompactRowPolicy;
 
 	/**
@@ -196,29 +196,29 @@ class StreamingSearchResult implements SearchResultSet, SearchResultCollector {
 
 	public synchronized void setCount(int count) {
 		this.count = count;
-		pushState(PREPROCESS);
-		notifyAll();
-	}
+        pushState(PREPROCESS);
+        notifyAll();
+    }
 
-	public synchronized void setColumns(String[] columns) {
-		this.columns = columns;
-		pushState(BUFFER_AVAILABLE);
-		notifyAll();
-	}
+    public synchronized void setColumns(String[] columns) {
+        this.columns = columns;
+        pushState(BUFFER_AVAILABLE);
+        notifyAll();
+    }
 
-	public synchronized void setMaxrows() {
-		this.mMaxrows = true;
-		pushState(COMPLETE);
-		notifyAll();
-	}
+    public synchronized void setMaxRows() {
+        this.mMaxrows = true;
+        pushState(COMPLETE);
+        notifyAll();
+    }
 
-	synchronized void setException(RetsException e) {
-		this.exception = e;
-		pushState(COMPLETE);
-		notifyAll();
-	}
+    synchronized void setException(RetsException e) {
+        this.exception = e;
+        pushState(COMPLETE);
+        notifyAll();
+    }
 
-	// ----------- Consumer Methods
+    // ----------- Consumer Methods
 
 	public synchronized boolean hasNext() throws RetsException {
 		// wait for someone to add data to the queue
@@ -246,29 +246,29 @@ class StreamingSearchResult implements SearchResultSet, SearchResultCollector {
 		while (checkException() && state() < BUFFER_AVAILABLE) {
 			_wait();
 		}
-		return this.count;
-	}
+        return this.count;
+    }
 
-	public synchronized String[] getColumns() throws RetsException {
-		while (checkException() && state() < BUFFER_AVAILABLE) {
-			_wait();
-		}
-		return this.columns;
-	}
+    public synchronized String[] getColumns() throws RetsException {
+        while (checkException() && state() < BUFFER_AVAILABLE) {
+            _wait();
+        }
+        return this.columns;
+    }
 
-	public synchronized boolean isMaxrows() throws RetsException {
-		checkException();
+    public synchronized boolean isMaxRows() throws RetsException {
+        checkException();
 
-		if (!isComplete())
-			throw new IllegalStateException("Cannot call isMaxRows until isComplete == true");
+        if (!isComplete())
+            throw new IllegalStateException("Cannot call isMaxRows until isComplete == true");
 
-		return this.mMaxrows;
-	}
+        return this.mMaxrows;
+    }
 
-	public synchronized SearchResultInfo getInfo() throws RetsException {
-		checkException();
+    public synchronized SearchResultInfo getInfo() throws RetsException {
+        checkException();
 
-		if (!isComplete())
+        if (!isComplete())
 			throw new IllegalStateException("Cannot call isMaxRows until isComplete == true");
 
 		return this;

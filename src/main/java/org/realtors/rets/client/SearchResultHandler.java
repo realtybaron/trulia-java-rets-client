@@ -1,24 +1,16 @@
 package org.realtors.rets.client;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.xml.sax.*;
+
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.StringTokenizer;
-
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.xml.sax.Attributes;
-import org.xml.sax.ContentHandler;
-import org.xml.sax.ErrorHandler;
-import org.xml.sax.InputSource;
-import org.xml.sax.Locator;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
-import org.xml.sax.XMLReader;
 /**
  * 
  * Handles XML parsing from response setting the proper fields using a SearchResultCollector
@@ -118,9 +110,9 @@ public class SearchResultHandler implements ContentHandler, ErrorHandler{
 			return;
 		}
 		if (name == "MAXROWS") {
-			this.collector.setMaxrows();
-			return;
-		}
+            this.collector.setMaxRows();
+            return;
+        }
 		// Unknown tag. danger, will.
 		LOG.warn("Unknown tag: " + name + ", qName = " + qName);
 

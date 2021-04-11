@@ -1,35 +1,35 @@
 package org.realtors.rets.client;
 
+import org.realtors.rets.common.util.CaseInsensitiveTreeMap;
+
 import java.io.InputStream;
 import java.util.Map;
-
-import org.realtors.rets.common.util.CaseInsensitiveTreeMap;
 
 /**
  * Representation of a single object returned
  * from a RETS server.
- * 
+ *
  * @author jrayburn
  */
 public class SingleObjectResponse {
 
-	public static final String CONTENT_TYPE = "Content-Type";
-	public static final String LOCATION = "Location";
-	public static final String CONTENT_DESCRIPTION = "Content-Description";
-	public static final String OBJECT_ID = "Object-ID";
-	public static final String CONTENT_ID = "Content-ID";
+    public static final String LOCATION = "Location";
+    public static final String OBJECT_ID = "Object-ID";
+    public static final String CONTENT_ID = "Content-ID";
+    public static final String CONTENT_TYPE = "Content-Type";
+    public static final String CONTENT_DESCRIPTION = "Content-Description";
 
-	private Map headers;
-	private InputStream inputStream;
+    private final Map headers;
+    private final InputStream inputStream;
 
-	public SingleObjectResponse(Map headers, InputStream in) {
-		this.headers = new CaseInsensitiveTreeMap(headers);
-		this.inputStream = in;
-	}
+    public SingleObjectResponse(Map headers, InputStream in) {
+        this.headers = new CaseInsensitiveTreeMap(headers);
+        this.inputStream = in;
+    }
 
-	public String getType() {
-		return (String) this.headers.get(CONTENT_TYPE);
-	}
+    public String getType() {
+        return (String) this.headers.get(CONTENT_TYPE);
+    }
 
 	public String getContentID() {
 		return (String) this.headers.get(CONTENT_ID);

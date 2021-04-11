@@ -1,35 +1,35 @@
 package org.realtors.rets.client;
 
+import org.apache.commons.logging.LogFactory;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import org.apache.commons.logging.LogFactory;
 /**
  * Concrete Implementation of SearchResult interface
- *
  */
 public class SearchResultImpl implements SearchResult, SearchResultCollector {
 
-	private String[] columnNames;
-	private int count;
-	private List<String[]> rows;
-	private boolean maxRows;
-	private boolean complete;
+    private int count;
+    private boolean maxRows;
+    private boolean complete;
+    private String[] columnNames;
+    private List<String[]> rows;
 
-	public SearchResultImpl() {
-		this.count = 0;
-		this.rows = new ArrayList<String[]>();
-		this.maxRows = false;
-		this.complete = false;
-	}
+    public SearchResultImpl() {
+        this.rows = new ArrayList<>();
+        this.count = 0;
+        this.maxRows = false;
+        this.complete = false;
+    }
 
-	public void setCount(int count) {
-		this.count = count;
-	}
+    public void setCount(int count) {
+        this.count = count;
+    }
 
-	public int getCount() {
+    public int getCount() {
 		if (this.count > 0) {
 			return this.count;
 		}
@@ -60,28 +60,28 @@ public class SearchResultImpl implements SearchResult, SearchResultCollector {
 
 	public String[] getRow(int idx) {
 		if (idx >= this.rows.size()) {
-			throw new NoSuchElementException();
-		}
-		return this.rows.get(idx);
-	}
+            throw new NoSuchElementException();
+        }
+        return this.rows.get(idx);
+    }
 
-	public Iterator iterator() {
-		return this.rows.iterator();
-	}
+    public Iterator iterator() {
+        return this.rows.iterator();
+    }
 
-	public void setMaxrows() {
-		this.maxRows = true;
-	}
+    public void setMaxRows() {
+        this.maxRows = true;
+    }
 
-	public boolean isMaxrows() {
-		return this.maxRows;
-	}
+    public boolean isMaxRows() {
+        return this.maxRows;
+    }
 
-	public void setComplete() {
-		this.complete = true;
-	}
+    public void setComplete() {
+        this.complete = true;
+    }
 
-	public boolean isComplete() {
-		return this.complete;
-	}
+    public boolean isComplete() {
+        return this.complete;
+    }
 }

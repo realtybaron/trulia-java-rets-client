@@ -7,19 +7,19 @@
  */
 package org.realtors.rets.client;
 
-import java.io.StringReader;
-
 import org.xml.sax.InputSource;
+
+import java.io.StringReader;
 
 /**
  * TODO refactor this and the StreamingSearchResultsProcessorTest.
- * 
+ * <p>
  * dbt is lame and hasn't overridden the default
  * javadoc string.
  */
 public class SearchResultHandlerTest extends RetsTestCase {
-	SearchResult runSearchTest(String input) throws RetsException {
-		return runSearchTest(input, InvalidReplyCodeHandler.FAIL);
+    SearchResult runSearchTest(String input) throws RetsException {
+        return runSearchTest(input, InvalidReplyCodeHandler.FAIL);
 	}
 
 	SearchResult runSearchTest(String input, InvalidReplyCodeHandler invalidReplyCodeHandler) throws RetsException {
@@ -31,47 +31,47 @@ public class SearchResultHandlerTest extends RetsTestCase {
 	}
 
 	public void testSmallResult() throws RetsException {
-		SearchResult result = runSearchTest(GOOD_SMALL_TEST);
-		assertTrue("search not complete", result.isComplete());
-		String[] columns = result.getColumns();
-		assertNotNull(columns);
-		assertEquals("column headers count wrong", 1, columns.length);
-		assertEquals("bad column header", "Column1", columns[0]);
-		assertEquals("wrong row count", 1, result.getCount());
-		String[] row = result.getRow(0);
-		assertEquals("wrong row width", 1, row.length);
-		assertEquals("wrong row data", "Data1", row[0]);
-		assertFalse("max rows wrong", result.isMaxrows());
+        SearchResult result = runSearchTest(GOOD_SMALL_TEST);
+        assertTrue("search not complete", result.isComplete());
+        String[] columns = result.getColumns();
+        assertNotNull(columns);
+        assertEquals("column headers count wrong", 1, columns.length);
+        assertEquals("bad column header", "Column1", columns[0]);
+        assertEquals("wrong row count", 1, result.getCount());
+        String[] row = result.getRow(0);
+        assertEquals("wrong row width", 1, row.length);
+        assertEquals("wrong row data", "Data1", row[0]);
+        assertFalse("max rows wrong", result.isMaxRows());
 	}
 
 	public void testAllTags() throws RetsException {
-		SearchResult result = runSearchTest(ALL_TAGS_TEST);
-		assertTrue("search not complete", result.isComplete());
-		assertEquals("extended count wrong", 100, result.getCount());
-		assertTrue("max rows not set", result.isMaxrows());
-		String[] row = result.getRow(0);
-		assertNotNull("row 0 is null", row);
-		assertEquals("wrong number of row[0] elements", 1, row.length);
-		assertEquals("wrong row[0] data", "Data1", row[0]);
-		row = result.getRow(1);
-		assertNotNull("row 1 is null", row);
-		assertEquals("wrong number of row[1] elements", 1, row.length);
-		assertEquals("wrong row[1] data", "Data2", row[0]);
+        SearchResult result = runSearchTest(ALL_TAGS_TEST);
+        assertTrue("search not complete", result.isComplete());
+        assertEquals("extended count wrong", 100, result.getCount());
+        assertTrue("max rows not set", result.isMaxRows());
+        String[] row = result.getRow(0);
+        assertNotNull("row 0 is null", row);
+        assertEquals("wrong number of row[0] elements", 1, row.length);
+        assertEquals("wrong row[0] data", "Data1", row[0]);
+        row = result.getRow(1);
+        assertNotNull("row 1 is null", row);
+        assertEquals("wrong number of row[1] elements", 1, row.length);
+        assertEquals("wrong row[1] data", "Data2", row[0]);
 	}
 
 	public void testReplyCode20208() throws RetsException {
-		SearchResult result = runSearchTest(MAXROWS_REPLYCODE);
-		assertTrue("search not complete", result.isComplete());
-		assertEquals("extended count wrong", 100, result.getCount());
-		assertTrue("max rows not set", result.isMaxrows());
-		String[] row = result.getRow(0);
-		assertNotNull("row 0 is null", row);
-		assertEquals("wrong number of row[0] elements", 1, row.length);
-		assertEquals("wrong row[0] data", "Data1", row[0]);
-		row = result.getRow(1);
-		assertNotNull("row 1 is null", row);
-		assertEquals("wrong number of row[1] elements", 1, row.length);
-		assertEquals("wrong row[1] data", "Data2", row[0]);
+        SearchResult result = runSearchTest(MAXROWS_REPLYCODE);
+        assertTrue("search not complete", result.isComplete());
+        assertEquals("extended count wrong", 100, result.getCount());
+        assertTrue("max rows not set", result.isMaxRows());
+        String[] row = result.getRow(0);
+        assertNotNull("row 0 is null", row);
+        assertEquals("wrong number of row[0] elements", 1, row.length);
+        assertEquals("wrong row[0] data", "Data1", row[0]);
+        row = result.getRow(1);
+        assertNotNull("row 1 is null", row);
+        assertEquals("wrong number of row[1] elements", 1, row.length);
+        assertEquals("wrong row[1] data", "Data2", row[0]);
 	}
 
 	public void testReplyCode20201WithColumns() throws RetsException {
