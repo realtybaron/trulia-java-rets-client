@@ -25,6 +25,6 @@ public enum MetadataType {
     VALIDATION_EXTERNAL_TYPE,
     VALIDATION_LOOKUP,
     VALIDATION_LOOKUP_TYPE,
-    CLASS;
-    
+    CLASS
+
 }

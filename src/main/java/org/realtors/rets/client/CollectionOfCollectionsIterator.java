@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class CollectionOfCollectionsIterator implements Iterator {
-    private Iterator mOuter;
+    private final Iterator mOuter;
     private Iterator mInner;
 
     public CollectionOfCollectionsIterator(Collection c) {

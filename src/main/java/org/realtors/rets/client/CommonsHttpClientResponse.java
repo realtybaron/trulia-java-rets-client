@@ -1,32 +1,31 @@
 package org.realtors.rets.client;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Map;
-import java.util.zip.GZIPInputStream;
-
+import com.google.common.io.Closeables;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.realtors.rets.common.util.CaseInsensitiveTreeMap;
 
-import com.google.common.io.Closeables;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Map;
+import java.util.zip.GZIPInputStream;
 
 public class CommonsHttpClientResponse implements RetsHttpResponse {
-	private HttpResponse response;
-	private Map<String,String> headers;
-	private Map<String,String> cookies;
+    private final HttpResponse response;
+    private final Map<String, String> headers;
+    private final Map<String, String> cookies;
 
-	public CommonsHttpClientResponse(HttpResponse response, Map<String,String> cookies) {
-		this.response = response;
-		this.cookies = new CaseInsensitiveTreeMap<String,String>(cookies);
+    public CommonsHttpClientResponse(HttpResponse response, Map<String, String> cookies) {
+        this.response = response;
+        this.cookies = new CaseInsensitiveTreeMap<String, String>(cookies);
 
-		this.headers = new CaseInsensitiveTreeMap<String,String>();
-		for (Header header : this.response.getAllHeaders()) {
-			this.headers.put(header.getName(), header.getValue());
-		}
-	}
+        this.headers = new CaseInsensitiveTreeMap<String, String>();
+        for (Header header : this.response.getAllHeaders()) {
+            this.headers.put(header.getName(), header.getValue());
+        }
+    }
 
 	public int getResponseCode() {
 		return this.response.getStatusLine().getStatusCode();

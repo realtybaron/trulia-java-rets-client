@@ -27,7 +27,7 @@ public class SearchRequest extends RetsHttpRequest {
     public static final String KEY_STANDARDNAMES = "StandardNames";
 
 
-    private String type;
+    private final String type;
 
     public SearchRequest(String stype, String sclass, String query) {
         setQueryParameter(KEY_TYPE, stype);

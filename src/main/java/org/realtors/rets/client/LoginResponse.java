@@ -1,15 +1,15 @@
 package org.realtors.rets.client;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.NumberUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashSet;
 import java.util.Set;
-
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.math.NumberUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 public class LoginResponse extends KeyValueResponse {
 	private static final String BROKER_KEY = "Broker";
@@ -27,27 +27,27 @@ public class LoginResponse extends KeyValueResponse {
 
 	private String sessionId;
 	private String memberName;
-	private String userInformation;
-	private String broker;
-	private String metadataVersion;
-	private String minMetadataVersion;
-	private String metadataTimestamp;
-	private String minMetadataTimestamp;
-	private String officeList;
-	private String balance;
-	private int sessionTimeout;
-	private String passwordExpiration;
-	private CapabilityUrls capabilityUrls;
-	private Set brokerCodes;
+    private String userInformation;
+    private String broker;
+    private String metadataVersion;
+    private String minMetadataVersion;
+    private String metadataTimestamp;
+    private String minMetadataTimestamp;
+    private String officeList;
+    private String balance;
+    private int sessionTimeout;
+    private String passwordExpiration;
+    private final CapabilityUrls capabilityUrls;
+    private Set brokerCodes;
 
-	public LoginResponse(String loginUrl) {
-		super();
-		this.brokerCodes = new HashSet();
-		URL url = null;
-		try {
-			url = new URL(loginUrl);
-		} catch (MalformedURLException e) {
-			LOG.warn("Bad URL: " + loginUrl);
+    public LoginResponse(String loginUrl) {
+        super();
+        this.brokerCodes = new HashSet();
+        URL url = null;
+        try {
+            url = new URL(loginUrl);
+        } catch (MalformedURLException e) {
+            LOG.warn("Bad URL: " + loginUrl);
 		}
 		this.capabilityUrls = new CapabilityUrls(url);
 	}

@@ -1,20 +1,18 @@
 package org.realtors.rets.client;
 
-import java.util.List;
-import java.util.StringTokenizer;
-import java.io.InputStream;
-import java.io.IOException;
-
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.Document;
-import org.jdom.input.SAXBuilder;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.JDOMException;
+import org.jdom.input.SAXBuilder;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+import java.util.StringTokenizer;
 
 abstract public class KeyValueResponse {
 	protected static final String CRLF = "\r\n";
@@ -73,16 +71,16 @@ abstract public class KeyValueResponse {
 	private void handleRetsResponse(Element retsResponse) throws RetsException {
 		StringTokenizer tokenizer = new StringTokenizer(retsResponse.getText(), CRLF);
 		while (tokenizer.hasMoreTokens()) {
-			String line = tokenizer.nextToken();
-			String splits[] = StringUtils.split(line, "=");
-			String key = splits[0].trim();
-			// guard against a missing value in a KeyValueResponse
-			String value = splits.length > 1 ? splits[1].trim() : "";
-			if (LOG.isDebugEnabled()) {
-				LOG.debug("<" + key + "> -> <" + value + ">");
-			}
-			this.handleKeyValue(key, value);
-		}
+            String line = tokenizer.nextToken();
+            String[] splits = StringUtils.split(line, "=");
+            String key = splits[0].trim();
+            // guard against a missing value in a KeyValueResponse
+            String value = splits.length > 1 ? splits[1].trim() : "";
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("<" + key + "> -> <" + value + ">");
+            }
+            this.handleKeyValue(key, value);
+        }
 	}
 
 	protected abstract void handleKeyValue(String key, String value) throws RetsException;

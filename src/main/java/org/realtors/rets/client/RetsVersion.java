@@ -17,10 +17,10 @@ public class RetsVersion implements Serializable {
     public static final RetsVersion RETS_1_8 = new RetsVersion(1, 8, 0, 0);
     public static final RetsVersion DEFAULT = RETS_1_8;
 
-    private int mMajor;
-    private int mMinor;
-    private int mDraft;
-    private int mRevision;
+    private final int mMajor;
+    private final int mMinor;
+    private final int mDraft;
+    private final int mRevision;
 
     public RetsVersion(int major, int minor) {
         this(major, minor, 0, 0);

@@ -13,11 +13,12 @@ public interface NetworkEventMonitor
      * @param message a message describing the event
      * @return an object to be passed to eventFinish, or null
      */
-    public Object eventStart(String message);
+    Object eventStart(String message);
+
     /**
      * Inform the client app that the previous event has completed
      *
      * @param o the object returned from eventStart
      */
-    public void eventFinish(Object o);
+    void eventFinish(Object o);
 }

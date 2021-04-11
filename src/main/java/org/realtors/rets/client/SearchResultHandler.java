@@ -12,31 +12,29 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.StringTokenizer;
 /**
- * 
  * Handles XML parsing from response setting the proper fields using a SearchResultCollector
- *
  */
-public class SearchResultHandler implements ContentHandler, ErrorHandler{
-	private static final Log LOG = LogFactory.getLog(SearchResultHandler.class);
-	private static SAXParserFactory FACTORY = SAXParserFactory.newInstance();
+public class SearchResultHandler implements ContentHandler, ErrorHandler {
+    private static final Log LOG = LogFactory.getLog(SearchResultHandler.class);
+    private static final SAXParserFactory FACTORY = SAXParserFactory.newInstance();
 
-	private int dataCount;
-	private SearchResultCollector collector;
-	private StringBuffer currentEntry;
-	private String delimiter;
-	private Locator locator;
-	private String[] columns;
-	private InvalidReplyCodeHandler invalidReplyCodeHandler;
-	private CompactRowPolicy compactRowPolicy;
+    private int dataCount;
+    private final SearchResultCollector collector;
+    private StringBuffer currentEntry;
+    private String delimiter;
+    private Locator locator;
+    private String[] columns;
+    private final InvalidReplyCodeHandler invalidReplyCodeHandler;
+    private final CompactRowPolicy compactRowPolicy;
 
-	public SearchResultHandler(SearchResultCollector r) {
-		this(r, InvalidReplyCodeHandler.FAIL, CompactRowPolicy.DEFAULT);
-	}
+    public SearchResultHandler(SearchResultCollector r) {
+        this(r, InvalidReplyCodeHandler.FAIL, CompactRowPolicy.DEFAULT);
+    }
 
-	public SearchResultHandler(SearchResultCollector r, InvalidReplyCodeHandler invalidReplyCodeHandler, CompactRowPolicy badRowPolicy) {
-		this.compactRowPolicy = badRowPolicy;
-		if (r == null)
-			throw new NullPointerException("SearchResultCollector must not be null");
+    public SearchResultHandler(SearchResultCollector r, InvalidReplyCodeHandler invalidReplyCodeHandler, CompactRowPolicy badRowPolicy) {
+        this.compactRowPolicy = badRowPolicy;
+        if (r == null)
+            throw new NullPointerException("SearchResultCollector must not be null");
 
 		if (invalidReplyCodeHandler == null)
 			throw new NullPointerException("InvalidReplyCodeHandler must not be null");

@@ -10,7 +10,9 @@ package org.realtors.rets.common.metadata;
 import java.io.Serializable;
 
 public interface AttrType<T> extends Serializable {
-	public T parse(String value, boolean strict) throws MetaParseException;
-	public Class<T> getType();
-	public String render(T value);
+    T parse(String value, boolean strict) throws MetaParseException;
+
+    Class<T> getType();
+
+    String render(T value);
 }

@@ -1,36 +1,35 @@
 package org.realtors.rets.common.metadata.types;
 
-import java.util.Collection;
-//import java.util.Date;
-import java.util.Map;
-
 import org.realtors.rets.common.metadata.MetaObject;
 import org.realtors.rets.common.metadata.MetadataType;
 
+import java.util.Collection;
+import java.util.Map;
+
 public class MClass extends MetaObject {
-	public static final String CLASSNAME = "ClassName";
-	public static final String VISIBLENAME = "VisibleName";
-	public static final String STANDARDNAME = "StandardName";
-	public static final String DESCRIPTION = "Description";
-	public static final String TABLEVERSION = "TableVersion";
-	public static final String TABLEDATE = "TableDate";
-	public static final String UPDATEVERSION = "UpdateVersion";
-	public static final String UPDATEDATE = "UpdateDate";
-	public static final String DELETEDFLAGFIELD = "DeletedFlagField";
-	public static final String DELETEDFLAGVALUE = "DeletedFlagValue";
-	public static final String CLASSTIMESTAMP = "ClassTimeStamp";
-	public static final String HASHKEYINDEX = "HasKeyIndex";
-	private static MetadataType[] sTypes = { MetadataType.UPDATE, MetadataType.TABLE };
+    public static final String CLASSNAME = "ClassName";
+    public static final String VISIBLENAME = "VisibleName";
+    public static final String STANDARDNAME = "StandardName";
+    public static final String DESCRIPTION = "Description";
+    public static final String TABLEVERSION = "TableVersion";
+    public static final String TABLEDATE = "TableDate";
+    public static final String UPDATEVERSION = "UpdateVersion";
+    public static final String UPDATEDATE = "UpdateDate";
+    public static final String DELETEDFLAGFIELD = "DeletedFlagField";
+    public static final String DELETEDFLAGVALUE = "DeletedFlagValue";
+    public static final String CLASSTIMESTAMP = "ClassTimeStamp";
+    public static final String HASHKEYINDEX = "HasKeyIndex";
+    private static final MetadataType[] sTypes = {MetadataType.UPDATE, MetadataType.TABLE};
 
-	public MClass() {
-		this(DEFAULT_PARSING);
-	}
+    public MClass() {
+        this(DEFAULT_PARSING);
+    }
 
-	public MClass(boolean strictParsing) {
-		super(strictParsing);
-	}
+    public MClass(boolean strictParsing) {
+        super(strictParsing);
+    }
 
-	@Override
+    @Override
 	public MetadataType[] getChildTypes() {
 		return sTypes;
 	}

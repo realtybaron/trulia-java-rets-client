@@ -91,20 +91,20 @@ public class StreamingSearchResultProcessor implements SearchResultProcessor {
 }
 
 class StreamingThread extends Thread {
-	private StreamingSearchResult mResult;
-	private InputSource mSource;
-	private InvalidReplyCodeHandler mInvalidReplyCodeHandler;
-	private CompactRowPolicy badRowPolicy;
+    private final StreamingSearchResult mResult;
+    private final InputSource mSource;
+    private final InvalidReplyCodeHandler mInvalidReplyCodeHandler;
+    private final CompactRowPolicy badRowPolicy;
 
-	public StreamingThread(InputSource source, StreamingSearchResult result,InvalidReplyCodeHandler invalidReplyCodeHandler, CompactRowPolicy badRowPolicy) {
-		this.mSource = source;
-		this.mResult = result;
-		this.mInvalidReplyCodeHandler = invalidReplyCodeHandler;
-		this.badRowPolicy = badRowPolicy;
-	}
+    public StreamingThread(InputSource source, StreamingSearchResult result, InvalidReplyCodeHandler invalidReplyCodeHandler, CompactRowPolicy badRowPolicy) {
+        this.mSource = source;
+        this.mResult = result;
+        this.mInvalidReplyCodeHandler = invalidReplyCodeHandler;
+        this.badRowPolicy = badRowPolicy;
+    }
 
-	@Override
-	public void run() {
+    @Override
+    public void run() {
 		SearchResultHandler handler = new SearchResultHandler(this.mResult, this.mInvalidReplyCodeHandler, this.badRowPolicy);
 		try {
 			handler.parse(this.mSource);

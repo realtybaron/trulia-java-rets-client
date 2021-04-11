@@ -1,22 +1,12 @@
 package org.realtors.rets.examples;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import org.realtors.rets.client.*;
+
+import java.io.*;
 import java.net.MalformedURLException;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-
-import org.realtors.rets.client.CommonsHttpClient;
-import org.realtors.rets.client.GetObjectRequest;
-import org.realtors.rets.client.RetsException;
-import org.realtors.rets.client.RetsHttpClient;
-import org.realtors.rets.client.RetsSession;
-import org.realtors.rets.client.RetsVersion;
-import org.realtors.rets.client.SingleObjectResponse;
 
 
 /**
@@ -64,17 +54,17 @@ public class RetsGetObjectExample {
 
 			//Iterate over each Object 
 			while (singleObjectResponseIter.hasNext()) {
-				SingleObjectResponse sor = (SingleObjectResponse)singleObjectResponseIter.next();
+                SingleObjectResponse sor = singleObjectResponseIter.next();
 
-				//Retrieve in info and print
-				String type =			sor.getType();
-				String contentID = 		sor.getContentID();
-				String objectID = 		sor.getObjectID();
-				String description = 	sor.getDescription();
-				String location = 		sor.getLocation();
-				InputStream is = 		sor.getInputStream();
+                //Retrieve in info and print
+                String type = sor.getType();
+                String contentID = sor.getContentID();
+                String objectID = sor.getObjectID();
+                String description = sor.getDescription();
+                String location = sor.getLocation();
+                InputStream is = sor.getInputStream();
 
-				System.out.print("type:" + type);
+                System.out.print("type:" + type);
 				System.out.print(" ,contentID:" + contentID);
 				System.out.print(" ,objectID:" + objectID);
 				System.out.println(" ,description:" + description);

@@ -1,10 +1,5 @@
 package org.realtors.rets.client;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Map;
-import java.util.NoSuchElementException;
-
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.http.HeaderElement;
 import org.apache.http.NameValuePair;
@@ -15,15 +10,21 @@ import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.realtors.rets.common.util.CaseInsensitiveTreeMap;
 
-public class GetObjectResponse{
-	private static final int DEFAULT_BUFFER_SIZE = 8192;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Map;
+import java.util.NoSuchElementException;
 
-	private final static GetObjectIterator<SingleObjectResponse> EMPTY_OBJECT_RESPONSE_ITERATOR = new GetObjectIterator<SingleObjectResponse>() {
-		public boolean hasNext() {
-			return false;
-		}
-		public SingleObjectResponse next() {
-			throw new NoSuchElementException();
+public class GetObjectResponse {
+    private static final int DEFAULT_BUFFER_SIZE = 8192;
+
+    private final static GetObjectIterator<SingleObjectResponse> EMPTY_OBJECT_RESPONSE_ITERATOR = new GetObjectIterator<SingleObjectResponse>() {
+        public boolean hasNext() {
+            return false;
+        }
+
+        public SingleObjectResponse next() {
+            throw new NoSuchElementException();
 		}
 		public void close() {
 			/* no op */
@@ -35,10 +36,14 @@ public class GetObjectResponse{
     private final Map headers;
     private final InputStream inputStream;
 	private final boolean isMultipart;
-	/** Indicate whether the response was empty */
-	private boolean emptyResponse;
-	/** Indicate whether this GetObjectResponse is exhausted, i.e. has no objects */
-	private boolean exhausted;
+    /**
+     * Indicate whether the response was empty
+     */
+    private boolean emptyResponse;
+    /**
+     * Indicate whether this GetObjectResponse is exhausted, i.e. has no objects
+     */
+    private final boolean exhausted;
 
 	public GetObjectResponse(Map headers, InputStream in) throws RetsException {
 		this.emptyResponse = false;

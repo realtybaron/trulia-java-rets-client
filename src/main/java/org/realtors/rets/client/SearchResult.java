@@ -9,15 +9,15 @@ import java.util.NoSuchElementException;
  */
 
 public interface SearchResult extends SearchResultInfo {
-    public String[] getRow(int idx) throws NoSuchElementException;
+    String[] getRow(int idx) throws NoSuchElementException;
 
-    public Iterator iterator();
+    Iterator iterator();
 
-    public String[] getColumns();
+    String[] getColumns();
 
-    public boolean isMaxRows();
+    boolean isMaxRows();
 
-    public int getCount();
+    int getCount();
 
-    public boolean isComplete();
+    boolean isComplete();
 }

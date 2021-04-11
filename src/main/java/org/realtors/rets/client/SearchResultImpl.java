@@ -16,7 +16,7 @@ public class SearchResultImpl implements SearchResult, SearchResultCollector {
     private boolean maxRows;
     private boolean complete;
     private String[] columnNames;
-    private List<String[]> rows;
+    private final List<String[]> rows;
 
     public SearchResultImpl() {
         this.rows = new ArrayList<>();

@@ -1,9 +1,8 @@
 package org.realtors.rets.client;
 
 
-import java.io.FileWriter;
-import java.util.HashMap;
-import java.util.Map;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.jdom.Document;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.XMLOutputter;
@@ -11,39 +10,40 @@ import org.realtors.rets.common.metadata.JDomCompactBuilder;
 import org.realtors.rets.common.metadata.JDomStandardBuilder;
 import org.realtors.rets.common.metadata.Metadata;
 import org.realtors.rets.common.metadata.MetadataBuilder;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+import java.io.FileWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
  * Implements the basic transport mechanism.  This class deals with the
  * very basic parts of sending the request, returning a response object,
  * and version negotiation.
- *
  */
 public class RetsTransport {
-	private static final String RETS_SESSION_ID_HEADER = "RETS-Session-ID"; // TODO spec says hyphen, Marketlinx uses an underscore
+    private static final String RETS_SESSION_ID_HEADER = "RETS-Session-ID"; // TODO spec says hyphen, Marketlinx uses an underscore
 
-	private RetsHttpClient client;
-	private CapabilityUrls capabilities;
-	private String method = "GET";
-	private RetsVersion version;
-	private boolean strict;
-	private NetworkEventMonitor monitor;
-	
-	private static final Log LOG = LogFactory.getLog(RetsTransport.class);
+    private final RetsHttpClient client;
+    private CapabilityUrls capabilities;
+    private String method = "GET";
+    private RetsVersion version;
+    private boolean strict;
+    private NetworkEventMonitor monitor;
 
-	private static Map MONITOR_MSGS = new HashMap(){{
-		put(ChangePasswordRequest.class, "Transmitting change password request");
-		put(GetObjectRequest.class, "Retrieving media object");
-		put(LoginRequest.class, "Logging in");
-		put(GetMetadataRequest.class, "Retrieving metadata");
-		put(LogoutRequest.class, "Logging out");
-		put(SearchRequest.class, "Executing search");
-	}};
+    private static final Log LOG = LogFactory.getLog(RetsTransport.class);
+
+    private static final Map MONITOR_MSGS = new HashMap() {{
+        put(ChangePasswordRequest.class, "Transmitting change password request");
+        put(GetObjectRequest.class, "Retrieving media object");
+        put(LoginRequest.class, "Logging in");
+        put(GetMetadataRequest.class, "Retrieving metadata");
+        put(LogoutRequest.class, "Logging out");
+        put(SearchRequest.class, "Executing search");
+    }};
 
 
-	/**
+    /**
 	 * Create a new transport instance.
 	 * @param client An http client (make sure you call setUserCredentials
 	 * on it before carrying out any transactions).

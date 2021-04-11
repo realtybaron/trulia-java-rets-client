@@ -1,38 +1,27 @@
 package org.realtors.rets.common.metadata;
 
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.Collections;
-//import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
-
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.realtors.rets.common.metadata.attrib.AttrAlphanum;
-import org.realtors.rets.common.metadata.attrib.AttrBoolean;
-import org.realtors.rets.common.metadata.attrib.AttrDate;
-import org.realtors.rets.common.metadata.attrib.AttrNumeric;
-import org.realtors.rets.common.metadata.attrib.AttrNumericPositive;
-import org.realtors.rets.common.metadata.attrib.AttrPlaintext;
-import org.realtors.rets.common.metadata.attrib.AttrText;
-import org.realtors.rets.common.metadata.attrib.AttrVersion;
+import org.realtors.rets.common.metadata.attrib.*;
 import org.realtors.rets.common.util.CaseInsensitiveTreeMap;
 
-public abstract class MetaObject implements Serializable {
-	private static final Log LOG = LogFactory.getLog(MetaObject.class);
+import java.io.Serializable;
+import java.util.*;
 
-	/** a standard parser used by different child types */
-	protected static final AttrType sAlphanum = new AttrAlphanum(0, 0);
-	protected static final AttrType sAlphanum64 = new AttrAlphanum(1, 64);
-	protected static final AttrType sAlphanum32 = new AttrAlphanum(1, 32);
-	protected static final AttrType sAlphanum24 = new AttrAlphanum(1, 24);
-	protected static final AttrType sAlphanum10 = new AttrAlphanum(1, 10);
+public abstract class MetaObject implements Serializable {
+    private static final Log LOG = LogFactory.getLog(MetaObject.class);
+
+    /**
+     * a standard parser used by different child types
+     */
+    protected static final AttrType sAlphanum = new AttrAlphanum(0, 0);
+    protected static final AttrType sAlphanum64 = new AttrAlphanum(1, 64);
+    protected static final AttrType sAlphanum32 = new AttrAlphanum(1, 32);
+    protected static final AttrType sAlphanum24 = new AttrAlphanum(1, 24);
+    protected static final AttrType sAlphanum10 = new AttrAlphanum(1, 10);
 	protected static final AttrType sPlaintext = new AttrPlaintext(0, 0);
 	protected static final AttrType sPlaintext1024 = new AttrPlaintext(1, 1024);
 	protected static final AttrType sPlaintext512 = new AttrPlaintext(1, 512);
@@ -61,29 +50,37 @@ public abstract class MetaObject implements Serializable {
 	public static final boolean LOOSE_PARSING = false;
 	public static final boolean DEFAULT_PARSING = LOOSE_PARSING;
 
-	/** the metdata path to this object */
-	protected String path;
-	/** map of child type to map of child id to child object */
-	protected Map childTypes;
-	/** map of attribute name to attribute object (as parsed by attrtype) */
-	protected Map attributes;
-	/** map of attribute name to AttrType parser */
-	protected Map attrTypes;
+    /**
+     * the metdata path to this object
+     */
+    protected String path;
+    /**
+     * map of child type to map of child id to child object
+     */
+    protected Map childTypes;
+    /**
+     * map of attribute name to attribute object (as parsed by attrtype)
+     */
+    protected Map attributes;
+    /**
+     * map of attribute name to AttrType parser
+     */
+    protected Map attrTypes;
 
 
-	private static Map<CacheKey,Map> sAttributeMapCache = new HashMap<CacheKey,Map>();
-	private MetaCollector mCollector;
-	private boolean strict;
+    private static final Map<CacheKey, Map> sAttributeMapCache = new HashMap<CacheKey, Map>();
+    private MetaCollector mCollector;
+    private final boolean strict;
 
-	public MetaObject(boolean strictParsing) {
-		this.strict = strictParsing;
-		if (strictParsing) {
-			this.attributes = new HashMap();
-		} else {
-			this.attributes = new CaseInsensitiveTreeMap();
-		}
-		this.attrTypes = this.getAttributeMap(strictParsing);
-		MetadataType[] types = getChildTypes();
+    public MetaObject(boolean strictParsing) {
+        this.strict = strictParsing;
+        if (strictParsing) {
+            this.attributes = new HashMap();
+        } else {
+            this.attributes = new CaseInsensitiveTreeMap();
+        }
+        this.attrTypes = this.getAttributeMap(strictParsing);
+        MetadataType[] types = getChildTypes();
 		this.childTypes = new HashMap();
 		for (int i = 0; i < types.length; i++) {
 			this.childTypes.put(types[i], null);
@@ -340,16 +337,16 @@ public abstract class MetaObject implements Serializable {
 }
 
 class CacheKey {
-	private Class mClass;
-	private boolean strictParsing;
+    private final Class mClass;
+    private final boolean strictParsing;
 
-	public CacheKey(MetaObject metaObject, boolean strictParsing) {
-		this.mClass = metaObject.getClass();
-		this.strictParsing = strictParsing;
-	}
+    public CacheKey(MetaObject metaObject, boolean strictParsing) {
+        this.mClass = metaObject.getClass();
+        this.strictParsing = strictParsing;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
+    @Override
+    public boolean equals(Object obj) {
 		if (!(obj instanceof CacheKey)) {
 			return false;
 		}

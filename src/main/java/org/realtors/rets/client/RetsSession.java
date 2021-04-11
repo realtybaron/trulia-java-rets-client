@@ -1,35 +1,35 @@
 package org.realtors.rets.client;
 
-import java.util.Map;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.realtors.rets.common.metadata.Metadata;
 import org.realtors.rets.common.metadata.MetadataException;
 
+import java.util.Map;
+
 /**
  * RetsSession is the core class of the rets.client package.
  */
 public class RetsSession {
-	public static final String METADATA_TABLES = "metadata_tables.xml";
-	public static final String RETS_CLIENT_VERSION = "1.5";//change default version
+    public static final String METADATA_TABLES = "metadata_tables.xml";
+    public static final String RETS_CLIENT_VERSION = "1.5";//change default version
 
-	private static final Log LOG = LogFactory.getLog(RetsSession.class);
-	private static String sUserAgent = "crt-rets-client/" + RETS_CLIENT_VERSION;
+    private static final Log LOG = LogFactory.getLog(RetsSession.class);
+    private static String sUserAgent = "crt-rets-client/" + RETS_CLIENT_VERSION;
 
-	private CapabilityUrls capabilityUrls;
-	private RetsHttpClient httpClient;
-	private RetsTransport transport;
-	private String sessionId;
+    private CapabilityUrls capabilityUrls;
+    private final RetsHttpClient httpClient;
+    private final RetsTransport transport;
+    private String sessionId;
 
 
-	/**
-	 * Creates a new <code>RetsSession</code> instance.
-	 * You must call login(user, pass) before attempting any other
-	 * transactions.
-	 * 
-	 * Uses a  default implementation of RetsHttpClient based on
-	 * apache commons http client.
+    /**
+     * Creates a new <code>RetsSession</code> instance.
+     * You must call login(user, pass) before attempting any other
+     * transactions.
+     *
+     * Uses a  default implementation of RetsHttpClient based on
+     * apache commons http client.
 	 *
 	 * Uses the RetsVersion.RETS_DEFAULT as the RetsVersion for
 	 * this session.
