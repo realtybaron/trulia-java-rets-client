@@ -10,14 +10,16 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 
 public class GetObjectResponseIterator<T extends SingleObjectResponse> implements GetObjectIterator<T> {
+
     public static final char CR = '\r';
     public static final char LF = '\n';
     public static final String EOL = CR + "" + LF;
     public static final String BS = "--";
 
-    private final PushbackInputStream multipartStream;
-    private final String boundary;
     private Boolean hasNext;
+
+    private final String boundary;
+    private final PushbackInputStream multipartStream;
 
     public static <T extends SingleObjectResponse> GetObjectIterator<T> createIterator(final GetObjectResponse response, int streamBufferSize) throws Exception {
         String boundary = response.getBoundary();

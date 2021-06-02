@@ -6,10 +6,11 @@ import org.apache.commons.lang.StringUtils;
 import java.util.*;
 
 public class GetObjectRequest extends VersionInsensitiveRequest {
-    public static final String KEY_RESOURCE = "Resource";
+
+    public static final String KEY_ID = "ID";
     public static final String KEY_TYPE = "Type";
     public static final String KEY_LOCATION = "Location";
-    public static final String KEY_ID = "ID";
+    public static final String KEY_RESOURCE = "Resource";
 
     private final Map mMap;
 
@@ -18,10 +19,10 @@ public class GetObjectRequest extends VersionInsensitiveRequest {
     }
 
     public GetObjectRequest(String resource, String type, String[] acceptMimeTypes) {
-        setQueryParameter(KEY_RESOURCE, resource);
-        setQueryParameter(KEY_TYPE, type);
         this.mMap = new HashMap();
-        setHeader("Accept", StringUtils.join(acceptMimeTypes, ", "));
+        setQueryParameter(KEY_TYPE, type);
+        setQueryParameter(KEY_RESOURCE, resource);
+        this.setHeader("Accept", StringUtils.join(acceptMimeTypes, ", "));
     }
 
     @Override
