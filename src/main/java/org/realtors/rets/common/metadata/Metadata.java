@@ -1,19 +1,8 @@
 package org.realtors.rets.common.metadata;
 
-import java.io.Serializable;
+import org.realtors.rets.common.metadata.types.*;
 
-import org.realtors.rets.common.metadata.types.MSystem;
-import org.realtors.rets.common.metadata.types.MResource;
-import org.realtors.rets.common.metadata.types.MForeignKey;
-import org.realtors.rets.common.metadata.types.MClass;
-import org.realtors.rets.common.metadata.types.MTable;
-import org.realtors.rets.common.metadata.types.MUpdate;
-import org.realtors.rets.common.metadata.types.MUpdateType;
-import org.realtors.rets.common.metadata.types.MObject;
-import org.realtors.rets.common.metadata.types.MValidationExternal;
-import org.realtors.rets.common.metadata.types.MValidationLookup;
-import org.realtors.rets.common.metadata.types.MLookup;
-import org.realtors.rets.common.metadata.types.MSearchHelp;
+import java.io.Serializable;
 
 public class Metadata implements Serializable {
 
@@ -125,8 +114,7 @@ public class Metadata implements Serializable {
 		if (index == -1) {
 			return null;
 		}
-		String resource = path.substring(0, index);
-		return resource;
+        return path.substring(0, index);
 	}
 
 	public MResource getResource(MTable field) {

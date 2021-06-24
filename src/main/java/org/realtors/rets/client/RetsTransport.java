@@ -25,21 +25,22 @@ public class RetsTransport {
     private static final String RETS_SESSION_ID_HEADER = "RETS-Session-ID"; // TODO spec says hyphen, Marketlinx uses an underscore
 
     private final RetsHttpClient client;
-    private CapabilityUrls capabilities;
+
     private String method = "GET";
-    private RetsVersion version;
     private boolean strict;
+    private RetsVersion version;
+    private CapabilityUrls capabilities;
     private NetworkEventMonitor monitor;
 
     private static final Log LOG = LogFactory.getLog(RetsTransport.class);
 
     private static final Map MONITOR_MSGS = new HashMap() {{
-        put(ChangePasswordRequest.class, "Transmitting change password request");
-        put(GetObjectRequest.class, "Retrieving media object");
         put(LoginRequest.class, "Logging in");
-        put(GetMetadataRequest.class, "Retrieving metadata");
         put(LogoutRequest.class, "Logging out");
         put(SearchRequest.class, "Executing search");
+        put(GetObjectRequest.class, "Retrieving media object");
+        put(GetMetadataRequest.class, "Retrieving metadata");
+        put(ChangePasswordRequest.class, "Transmitting change password request");
     }};
 
 
@@ -262,8 +263,7 @@ public class RetsTransport {
 		}
 		req.setUrl(this.capabilities);
 		RetsHttpResponse httpResponse = this.client.doRequest(this.method, req);
-		GetObjectResponse result = new GetObjectResponse(httpResponse.getHeaders(), httpResponse.getInputStream());
-		return result;
+        return new GetObjectResponse(httpResponse.getHeaders(), httpResponse.getInputStream());
 	}
 
 	public Metadata getMetadata(String location) throws RetsException {
@@ -292,9 +292,6 @@ public class RetsTransport {
 					metadataBuilder = new JDomStandardBuilder();
 				}
 				metadataBuilder.setStrict(this.strict);
-			
-		        
-		        
 				return metadataBuilder.doBuild(xmlDocument);
 			} finally {
 				this.monitor.eventFinish(monitorobj);
